@@ -1,19 +1,32 @@
 name: Node.js CI
 on: [push, pull_request]
 jobs:
-    build: 
+    test:
         runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                node-version: [14.x, 16.x, 18.x]
         steps:
-            - uses: actions/checkout@v2
-            - name: Use Node.js ${{ matrix.node-version }}
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Setup Node.js
               uses: actions/setup-node@v2
               with:
-                  node-version: ${{ matrix.node-version }}
-            - run: npm install
-            - run: npm test
-# User service tests: user data validation => should validate correct user, reject user with missing fields, reject user under 18 years old.
-# Product service tests: product data validation => should update product stock correctly, reject negative, should identify low stock products. 
-# Order service tests: order processing => should create order with valid data, reject order insufficient stock, reject order with invalid quantity.
+                  node-version: '18.x'
+
+            - name: Install dependencies
+              run: npm install
+
+            - name: Run User Service Tests
+              run: npm test tests/users.test.js
+
+            - name: Run Product Service Tests
+              run: npm test tests/products.test.js
+
+            - name: Run Order Service Tests
+              run: npm test tests/orders.test.js
+
+            - name: Generate Test Report
+              run: |
+                  echo "==================================="
+                  echo "Test Report Summary"
+                  echo "==================================="
+                  npm test -- --verbose
