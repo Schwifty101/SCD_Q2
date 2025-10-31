@@ -1,6 +1,3 @@
-// Order Service Tests
-
-// Helper function for order processing
 function createOrder(userId, productId, quantity, products) {
   if (!userId || !productId || quantity === undefined || quantity === null) {
     return { success: false, error: 'Missing required fields' };

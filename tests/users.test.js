@@ -1,6 +1,3 @@
-// User Service Tests
-
-// Helper function to validate user data
 function validateUser(user) {
   if (!user.name || !user.email || !user.age) {
     return { valid: false, error: 'Missing required fields' };

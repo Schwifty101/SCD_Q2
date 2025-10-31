@@ -1,6 +1,3 @@
-// Product Service Tests
-
-// Helper functions for product operations
 function updateProductStock(product, quantity) {
   if (quantity < 0) {
     return { success: false, error: 'Stock cannot be negative' };
